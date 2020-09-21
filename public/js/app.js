@@ -3575,6 +3575,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -3588,8 +3600,23 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         category: '',
         price: ''
-      }
+      },
+      keywords: ''
     };
+  },
+  computed: {
+    productsFiltered: function productsFiltered() {
+      var products = this.products;
+
+      if (this.keywords) {
+        var findName = new RegExp(this.keywords, 'i');
+        products = products.filter(function (el) {
+          return el.name.match(findName);
+        });
+      }
+
+      return products;
+    }
   },
   methods: {
     openModal: function openModal() {
@@ -3625,6 +3652,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     destroy: function destroy(product) {
       this.$inertia["delete"]('products/' + product.id, product);
+    },
+    clearSearch: function clearSearch() {
+      this.keywords = '';
     }
   }
 });
@@ -27499,6 +27529,48 @@ var render = function() {
                   _vm._v(" Add New\n                        ")
                 ]
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-9" }, [
+              _c("div", { staticClass: "form-inline justify-content-end" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.keywords,
+                          expression: "keywords"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Search..." },
+                      domProps: { value: _vm.keywords },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.keywords = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group-append" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.clearSearch }
+                        },
+                        [_c("i", { staticClass: "fas fa-sync-alt" })]
+                      )
+                    ])
+                  ])
+                ])
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -27518,7 +27590,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._l(_vm.products, function(product) {
+              _vm._l(_vm.productsFiltered, function(product) {
                 return _c("tr", [
                   _c("td", [_vm._v(_vm._s(product.name))]),
                   _vm._v(" "),

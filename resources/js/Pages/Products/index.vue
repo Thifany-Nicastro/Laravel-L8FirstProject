@@ -12,6 +12,18 @@
                                 <i class="fas fa-plus-circle"></i> Add New
                             </a>
                         </div>
+                        <div class="col-md-9">
+                            <div class="form-inline justify-content-end">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input type="text" v-model="keywords" class="form-control" placeholder="Search...">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" @click="clearSearch" type="button"><i class="fas fa-sync-alt"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <table class="table table-bordered table-condensed">
                         <thead>
@@ -22,7 +34,7 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tr v-for="product in products">
+                        <tr v-for="product in productsFiltered">
                             <td>{{ product.name }}</td>
                             <td>{{ product.category }}</td>
                             <td>{{ product.value }}</td>
@@ -94,8 +106,22 @@
                     name: '',
                     category: '',
                     price: ''
-                }
+                },
+                keywords: ''
             }
+        },
+
+        computed: {
+            productsFiltered () {
+                let products = this.products;
+
+                if (this.keywords) {
+                    let findName = new RegExp(this.keywords, 'i');
+                    products = products.filter(el => el.name.match(findName))
+                }
+
+                return products;
+            },
         },
 
         methods: {
@@ -140,6 +166,10 @@
 
             destroy (product) {
                 this.$inertia.delete('products/' + product.id, product);
+            },
+
+            clearSearch () {
+                this.keywords = '';
             },
         }
     }
