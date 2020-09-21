@@ -64,8 +64,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @click="closeModal()">Close</button>
-                        <button type="button" class="btn btn-primary" @click.prevent="store()">Save</button>
-                        <button type="button" class="btn btn-primary" @click.prevent="update()">Update</button>
+                        <button type="button" class="btn btn-primary" v-show="!isEdit" @click.prevent="store()">Save</button>
+                        <button type="button" class="btn btn-primary" v-show="isEdit" @click.prevent="update()">Update</button>
                     </div>
                     </div>
                 </div>
@@ -86,6 +86,7 @@
 
         data() {
             return {
+                isEdit: false,
                 product: {
                     name: '',
                     category: '',
@@ -112,6 +113,7 @@
             },
 
             create () {
+                this.isEdit = false;
                 this.reset();
                 this.openModal();
             },
@@ -124,11 +126,13 @@
 
             edit (product) {
                 this.product = Object.assign({}, product);
+                this.isEdit = true;
                 this.openModal();
             },
 
             update () {
                 this.$inertia.put('products/' + this.product.id, this.product);
+                this.closeModal();
             },
 
             destroy (product) {

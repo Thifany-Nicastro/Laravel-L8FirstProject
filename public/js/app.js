@@ -3580,6 +3580,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['products'],
   data: function data() {
     return {
+      isEdit: false,
       product: {
         name: '',
         category: '',
@@ -3602,6 +3603,7 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     create: function create() {
+      this.isEdit = false;
       this.reset();
       this.openModal();
     },
@@ -3612,10 +3614,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     edit: function edit(product) {
       this.product = Object.assign({}, product);
+      this.isEdit = true;
       this.openModal();
     },
     update: function update() {
       this.$inertia.put('products/' + this.product.id, this.product);
+      this.closeModal();
     },
     destroy: function destroy(product) {
       this.$inertia["delete"]('products/' + product.id, product);
@@ -27694,6 +27698,14 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.isEdit,
+                        expression: "!isEdit"
+                      }
+                    ],
                     staticClass: "btn btn-primary",
                     attrs: { type: "button" },
                     on: {
@@ -27709,6 +27721,14 @@ var render = function() {
                 _c(
                   "button",
                   {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.isEdit,
+                        expression: "isEdit"
+                      }
+                    ],
                     staticClass: "btn btn-primary",
                     attrs: { type: "button" },
                     on: {
