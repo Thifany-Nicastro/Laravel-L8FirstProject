@@ -51,15 +51,18 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Product Name</label>
-                            <input type="text" class="form-control" id="name" v-model="product.name">
+                            <input type="text" class="form-control" id="name" v-model="product.name" :class="{ 'is-invalid': $page.errors.name }">
+                            <div v-if="$page.errors.name" class="invalid-feedback">{{ $page.errors.name }}</div>
                         </div>
                         <div class="form-group">
                             <label>Category</label>
-                            <input type="text" class="form-control" id="category" v-model="product.category">
+                            <input type="text" class="form-control" id="category" v-model="product.category" :class="{ 'is-invalid': $page.errors.category }">
+                            <div v-if="$page.errors.category" class="invalid-feedback">{{ $page.errors.category }}</div>
                         </div>
                         <div class="form-group">
                             <label>Price ($)</label>
-                            <input type="text" class="form-control" id="value" v-model="product.value">
+                            <input type="text" class="form-control" id="value" v-model="product.value" :class="{ 'is-invalid': $page.errors.value }">
+                            <div v-if="$page.errors.value" class="invalid-feedback">{{ $page.errors.value }}</div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -121,7 +124,7 @@
             store () {
                 this.$inertia.post('products', this.product);
                 this.reset();
-                this.closeModal();
+                // this.closeModal();
             },
 
             edit (product) {
