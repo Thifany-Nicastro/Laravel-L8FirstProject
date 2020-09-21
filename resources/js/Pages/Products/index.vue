@@ -7,7 +7,7 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <a href="#" class="btn btn-primary" @click="openModal()">
+                        <a href="#" class="btn btn-primary" @click="create()">
                             <i class="fas fa-plus-circle"></i> Add New
                         </a>
                     </div>
@@ -18,18 +18,26 @@
                             <th>Name</th>
                             <th>Category</th>
                             <th>Price</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tr v-for="product in products">
                         <td>{{ product.name }}</td>
                         <td>{{ product.category }}</td>
                         <td>{{ product.value }}</td>
+                        <td>
+                            <a href="#" class="btn btn-sm btn-outline-primary" @click.prevent="edit(product)">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="#" class="btn btn-sm btn-outline-danger" @click.prevent="destroy(product)">
+                                <i class="fas fa-times"></i>
+                            </a>
+                        </td>
                     </tr>
                 </table>
             </div>
         </div>
 
-        <!-- Modal -->
         <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -40,11 +48,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" class="form-control" id="name" v-model="product.name">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" class="form-control" id="category" v-model="product.category">
+                    </div>
+                    <div class="form-group">
+                        <label>Price ($)</label>
+                        <input type="text" class="form-control" id="value" v-model="product.value">
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" @click="closeModal()">Close</button>
+                    <button type="button" class="btn btn-primary" @click.prevent="store()">Save</button>
+                    <button type="button" class="btn btn-primary" @click.prevent="update()">Update</button>
                 </div>
                 </div>
             </div>
@@ -68,11 +88,11 @@
 
         methods: {
             openModal () {
-                $('#modal').modal('show')
+                $('#modal').modal('show');
             },
 
             closeModal () {
-                $('#modal').modal('hide')
+                $('#modal').modal('hide');
             },
 
             reset () {
@@ -81,6 +101,30 @@
                     category: '',
                     price: ''
                 }
+            },
+
+            create () {
+                this.reset();
+                this.openModal();
+            },
+
+            store () {
+                this.$inertia.post('products', this.product);
+                this.reset();
+                this.closeModal();
+            },
+
+            edit (product) {
+                this.product = Object.assign({}, product);
+                this.openModal();
+            },
+
+            update () {
+                this.$inertia.put('products/' + this.product.id, this.product);
+            },
+
+            destroy (product) {
+                this.$inertia.delete('products/' + product.id, product);
             },
         }
     }
