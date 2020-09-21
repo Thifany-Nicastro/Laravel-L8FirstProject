@@ -13,4 +13,10 @@ class ProductController extends Controller
         $products = Product::all();
         return Inertia::render('Products/index', ['products' => $products]);
     }
+
+    public function store(Request $request)
+    {
+        Product::create($request->all());
+        return back();
+    }
 }

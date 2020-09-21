@@ -3474,8 +3474,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['products']
+  props: ['products'],
+  data: function data() {
+    return {
+      product: {
+        name: '',
+        category: '',
+        price: ''
+      }
+    };
+  },
+  methods: {
+    openModal: function openModal() {
+      $('#modal').modal('show');
+    },
+    closeModal: function closeModal() {
+      $('#modal').modal('hide');
+    },
+    reset: function reset() {
+      this.product = {
+        name: '',
+        category: '',
+        price: ''
+      };
+    }
+  }
 });
 
 /***/ }),
@@ -27263,28 +27322,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-md-6" }, [
-    _c(
-      "table",
-      { staticClass: "table table-bordered table-condensed" },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._l(_vm.products, function(product) {
-          return _c("tr", [
-            _c("td", [_vm._v(_vm._s(product.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.category))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(product.value))])
+  return _c("div", { staticClass: "container py-5" }, [
+    _c("div", { staticClass: "card" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "card-body" }, [
+        _c("div", { staticClass: "row mb-3" }, [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    return _vm.openModal()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "fas fa-plus-circle" }),
+                _vm._v(" Add New\n                    ")
+              ]
+            )
           ])
-        })
-      ],
-      2
-    )
+        ]),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "table table-bordered table-condensed" },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.products, function(product) {
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(product.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(product.category))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(product.value))])
+              ])
+            })
+          ],
+          2
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2)
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h2", [_vm._v("Manage Products")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -27298,6 +27394,72 @@ var staticRenderFns = [
         _c("th", [_vm._v("Price")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: { id: "modal", tabindex: "-1", "aria-hidden": "true" }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" }
+                },
+                [_vm._v("Modal title")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "close",
+                  attrs: {
+                    type: "button",
+                    "data-dismiss": "modal",
+                    "aria-label": "Close"
+                  }
+                },
+                [
+                  _c("span", { attrs: { "aria-hidden": "true" } }, [
+                    _vm._v("×")
+                  ])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _vm._v("\n                ...\n            ")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-primary", attrs: { type: "button" } },
+                [_vm._v("Save changes")]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
